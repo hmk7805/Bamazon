@@ -1,0 +1,22 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "An amazon-like app where a customer can buy stored inventory",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hmk7805/Bamazon.git"
+  },
+  "author": "Hannah King",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hmk7805/Bamazon/issues"
+  },
+  "homepage": "https://github.com/hmk7805/Bamazon#readme",
+  "dependencies": {
+    "inquirer": "^3.0.5"
+  }
+}
