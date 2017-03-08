@@ -20,9 +20,9 @@ INSERT INTO products (product_name, department_name, price, stock_quantity) VALU
     ("Apple Watch Stand", "Technology", 22.50, 100),
     ("Sunglasses", "Accessories", 12.50, 1000);
 
+USE bamazon_DB;
 SELECT * FROM products;
 
-USE products; 
 DELETE FROM products WHERE item_id>=6;
 
 ALTER TABLE products ADD COLUMN inStock BOOLEAN DEFAULT True;

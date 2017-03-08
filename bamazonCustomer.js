@@ -67,38 +67,40 @@ var run = function(){
                 type: "input",
                 message:"How many of those would you like to buy?"
         }]).then(function(answerObj){ 
-            //logic for user input
+            //Object to store user input
             var userInput = {
                 "item_id": answerObj.item_choice,
                 "req_quantity": answerObj.itemqty
             };
+            //Fxn to query on userInput values
             var submitInput = function(){
                 connection.query("SELECT * FROM products WHERE item_id=" + answerObj.item_choice, function(err, res){
-                    //array selector necessary
-                    if(res[0].stock_quantity>=answerObj.itemqty){          
-                        var inventoryCount = function (){
-                            connection.query('SELECT * FROM products WHERE stock_quantity=0', function(err, res){
-                                if (err) throw err;
-                                for(var i=0; i < res.length; i++) {
-                                    if(res[i].stock_quantity === 0){
-                                        connection.query("UPDATE products WHERE stock_quantity=0 SET inStock=false");
-                                    };
-                                };
-                            });
-                            console.log("---------------------------------------");                                    
-                        };
+                    //array selector necessary even with 1 item
+                    //Checking whether quantity requested is possible
+                    if(res[0].stock_quantity>=answerObj.itemqty){
+                        //Fxn updates the database with the new stock quantity after purchase
                         var updateQty = function(databaseStock) {
                             var adjustedStock = parseInt(databaseStock) - answerObj.itemqty;
                             connection.query("UPDATE products SET stock_quantity=" + adjustedStock + " WHERE item_id=" + answerObj.item_choice, function(err){
                                 if (err) throw err;
-                                console.log(`Stock Updated. ID: ${answerObj.item_choice}`)                                    
+                                console.log(`Order Placed. ${res[0].product_name} stock updated.`)                                    
                                 console.log("---------------------------------------");                                    
-                            });
-                            inventoryCount();
-                            
+                            });                            
                         }
-
                         updateQty(res[0].stock_quantity);
+                        //Fxn Updates inStock property on any item that has 0 inventory          
+                        var inventoryCount = function (){
+                            connection.query("UPDATE products SET inStock=false WHERE stock_quantity=0");
+                            console.log("---------------------------------------");                                    
+                        };
+                        inventoryCount();
+                        var totalOrder = function(qty, price){
+                            var total = qty * parseInt(price);
+                            console.log("---------------------------------------");                                    
+                            console.log("Your Order Total: $" + total);                            
+                            console.log("---------------------------------------");                                    
+                        }
+                        totalOrder(answerObj.itemqty, res[0].price);
                     } else { 
                     console.log("Sorry. Only " + res[0].stock_quantity + " in stock.");
                     }  
@@ -111,10 +113,7 @@ var run = function(){
                 connection.end();
             }, 1000)
         });
-        //--------------------------------------------------------------------
     });
-    //--------------------------------------------------------------------
 };
-//--------------------------------------------------------------------
 
 
