@@ -94,6 +94,7 @@ var run = function(){
                             console.log("---------------------------------------");                                    
                         };
                         inventoryCount();
+                        //Fxn that calculates and stores the users order total.
                         var totalOrder = function(qty, price){
                             var total = qty * parseInt(price);
                             console.log("---------------------------------------");                                    
