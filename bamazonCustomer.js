@@ -39,7 +39,6 @@ var run = function(){
             for (var i = 0; i < res.length; i++) {
                 var item = `ID: ${res[i].item_id} | Product: ${res[i].product_name} | Price: $${res[i].price}`
                 choiceArr.push(item);
-                //.product_name
             };
             return choiceArr;
         };
